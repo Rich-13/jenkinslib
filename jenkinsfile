@@ -1,0 +1,95 @@
+#!groovy
+
+@Library('jenkinslib') _
+
+def tools = new org.devops.tools()
+
+pipeline{
+    agent any
+    
+
+    
+    options{
+    timestamps() //打印的日志有时间
+    skipDefaultCheckout() //删除隐式checkout scm语句
+    disableConcurrentBuilds()   //禁止并行
+    timeout(time: 1,unit: "HOURS") //流水线超时设置1h
+    }
+    
+    stages{
+    //下载代码
+        stage("GetCode"){
+            
+            
+                
+            input id: 'Test', message: '请确认是否继续！', ok: '是的，我确认', parameters: [choice(choices: ['1111', '2222', '3333'], name: 'test1')], submitter: 'admin'
+            
+            steps{
+                timeout(time: 3,unit: "MINUTES"){  //步骤超时时间
+                    script{                 //填写运行代码
+                        println('获取代码')  //执行脚本
+                    }
+                }
+            
+        }
+    }
+        //构建
+        stage("Build"){
+            steps{
+                timeout(time: 20,unit: "MINUTES"){  //步骤超时时间
+                    script{                 //填写运行代码
+                        println('应用打包')  //执行脚本
+                        
+                        mvnHome = tool "m2"
+                        println(mvnHome)
+                        
+                        sh "${mvnHome}/bin/mvn --version"
+                    }
+                }
+            }
+        }    
+        //代码扫描
+        stage("CodeScan"){
+            steps{
+                timeout(time: 30,unit: "MINUTES"){  //步骤超时时间
+                    script{                 //填写运行代码
+                        println('代码扫描')  //执行脚本
+
+                        tools.PrintMes("this is my lib!") 
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always{
+            script{
+                println('always')
+                println('${test}')
+            }
+        }
+        
+        success{                            
+            script{
+                currentBuild.description = "\n 构建成功"       //currentBuild全局变量   description构建描述
+                
+            }
+        }
+        
+        failure{
+             script{
+                currentBuild.description = "\n 构建失败"
+            }
+        }
+        
+        aborted{
+             script{
+                currentBuild.description = "\n 构建取消"
+            }
+        }
+        
+    }
+    
+}
+
