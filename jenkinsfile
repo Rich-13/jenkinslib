@@ -20,14 +20,14 @@ pipeline{
     //下载代码
         stage("GetCode"){
             
-            
-                
-            input id: 'Test', message: '请确认是否继续！', ok: '是的，我确认', parameters: [choice(choices: ['1111', '2222', '3333'], name: 'test1')], submitter: 'admin'
+            when { environment name: 'test' , value: 'abcd' }
             
             steps{
                 timeout(time: 3,unit: "MINUTES"){  //步骤超时时间
                     script{                 //填写运行代码
                         println('获取代码')  //执行脚本
+                        input id: 'Test', message: '请确认是否继续！', ok: '是的，我确认', parameters: [choice(choices: ['1111', '2222', '3333'], name: 'test1')], submitter: 'admin'
+            
                     }
                 }
             
@@ -92,4 +92,3 @@ pipeline{
     }
     
 }
-
