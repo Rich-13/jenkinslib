@@ -1,0 +1,22 @@
+#!groovy
+
+pipeline{
+  
+  agent any
+
+  stages{
+    stage("build"){
+      steps{
+        script{
+          mvnhome = tool "m2"
+          sh "${mvnhome}/bin/mvn -v"
+        }
+      }
+    }
+  }
+
+
+
+
+  
+}
