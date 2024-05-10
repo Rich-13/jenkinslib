@@ -1,1 +1,21 @@
+#!groovy
 
+@library('jenkinslib@main') _
+
+string BuildType = "${env.BuildType}"
+string BuildShell = "${env.BuildShell}"
+
+pipeline{
+  
+  agent any
+
+  stages{
+    stage("build"){
+      steps{
+        script{
+          build.Build(BuildType,BuildShell)
+        }
+      }
+    }
+  }  
+}
