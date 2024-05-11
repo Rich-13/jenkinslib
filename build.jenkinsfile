@@ -1,6 +1,7 @@
 #!groovy
 
 @Library('jenkinslib@main') _
+def build = new org.devops.Build()
 
 string BuildType = "${env.BuildType}"
 string BuildShell = "${env.BuildShell}"
