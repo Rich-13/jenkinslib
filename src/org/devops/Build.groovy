@@ -8,5 +8,5 @@ def Build(BuildType,BuildShell){
     println("当前您选择的构建类型为：${BuildType}")
     BuildHome = tool BuildTools[BuildType]
 
-    sh "${BuildHome}/bin/${BuildType} $(BuildShell)" 
+    sh "${BuildHome}/bin/${BuildType}  ${BuildShell}" 
 }
