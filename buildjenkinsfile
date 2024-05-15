@@ -135,8 +135,46 @@ pipeline {
             }
         }
 
+        stage('Build') {
+            steps {
+                script {
+                    // 根据 PLATFORMS 的值进行对应的构建
+                    switch (env.PLATFORMS) {
+                        // 只构建 amd64
+                        case 'linux/amd64':
+                            buildAmd64()
+                            break
+                        // 只构建 arm64
+                        case 'linux/arm64':
+                            buildArm64()
+                            break
+                        // 同时构建 amd64 和 arm64
+                        case 'linux/amd64,linux/arm64':
+                            buildAmd64()
+                            buildArm64()
+                            break
+                    }
+                }
+            }
+        }
 
-        // 判断架构进行构建
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*// 判断架构进行构建
          
         stage('Parallel Build') {
             when {
@@ -210,7 +248,7 @@ pipeline {
                     }
                 }
             }
-            
+            */
             // 推送多架构镜像 Manifest-tools
             stage('Push Multi-Arch Manifest') {
                 agent { kubernetes { inheritFrom 'kanikoamd' } }
