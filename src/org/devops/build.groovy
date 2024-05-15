@@ -2,7 +2,7 @@ package org.devops
 
 
 // 使用函数简化构建步骤
-def buildAm64() {
+def buildAmd64() {
     echo 'Building for amd64'
     buildImage('amd64')
 }
