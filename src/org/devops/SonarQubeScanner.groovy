@@ -7,6 +7,14 @@ class SonarQubeScanner {
     static void scan(def script, Map params) {
         script.echo "Running SonarQube analysis"
         // 设置SonarQube环境
+        agent { kubernetes { inheritFrom 'kanikoamd' } }
+        steps {
+                // 从之前的阶段恢复存储的源代码
+                unstash 'source-code'
+        
+                // 指定在特定容器中执行
+                container('kanikoamd') {
+                    
         script.withSonarQubeEnv('sonar') {
             script.withCredentials([script.string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
                 // 执行sonar-scanner命令
@@ -41,7 +49,9 @@ class SonarQubeScanner {
                 script.error "SonarQube quality gate failed: ${json.projectStatus.status}"
             } else {
                 script.echo "Quality gate passed successfully."
+                }
             }
-        }
-    }
+         }
+     }
+ }
 }
