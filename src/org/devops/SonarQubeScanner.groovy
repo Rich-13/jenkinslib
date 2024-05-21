@@ -8,7 +8,7 @@ class SonarQubeScanner {
         script.echo "Running SonarQube analysis"
         // 设置SonarQube环境
         script.withSonarQubeEnv('sonar') {
-            script.withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
+            script.withCredentials([script.string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
                 // 执行sonar-scanner命令
                 script.sh """
                 sonar-scanner \
