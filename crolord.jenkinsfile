@@ -1,3 +1,7 @@
+#!groovy
+
+@Library('jenkinslib') _
+
 pipeline {
     // 定义使用的 Jenkins agent 类型
     agent any
