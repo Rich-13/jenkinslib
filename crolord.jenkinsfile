@@ -86,7 +86,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 script {
-                    org.devops.SonarQubeScanner.SonarQubeScanner.scan(this, [
+                    org.devops.SonarQubeScanner.scan(this, [
                         JOB_NAME: env.JOB_NAME,
                         IMAGE_NAMESPACE: env.IMAGE_NAMESPACE,
                         VERSION_TAG: env.VERSION_TAG,
