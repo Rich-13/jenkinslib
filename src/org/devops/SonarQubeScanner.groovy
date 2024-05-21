@@ -1,4 +1,4 @@
-package org.SonarQubeScanner
+package org.devops
 
 import groovy.json.JsonSlurper
 
