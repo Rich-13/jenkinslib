@@ -28,7 +28,7 @@ class SonarQubeScanner {
 
         // 判断SonarQube质量门是否通过
         script.echo "Checking SonarQube quality gate"
-        script.withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
+        script.withCredentials([script.string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
             def authHeader = "Basic " + (script.SONAR_TOKEN + ":").bytes.encodeBase64().toString().trim()
             def response = script.httpRequest(
                 url: "http://${params.SONARQUBE_DOMAIN}/api/qualitygates/project_status?projectKey=${params.JOB_NAME}",
